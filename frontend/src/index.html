@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Frontend</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class="mat-typography">
+  <app-root>
+    <!--
+        A partir deste componente (componente principal da aplicação), todos os 
+      outros componentes vão ser carregados dentro dessa única página.
+
+      1º Passo - Ir a AppComponent.ts, e em @Component , escrever o seguinte código
+        templateUrl: 'app.component.html'
+                  Dentro da mesma página, vou criar um ficheiro com o nome de 
+      appComponent.html 
+
+      2º Passo - Em AppComponent.ts , onde está o export class AppComponent, vou 
+      alterar a variável title para nome = 'Maria' e para utilizar essa variável
+      no appComponent.html, tenho de utilizar {{ nome }}.
+
+      3º Passo - Interromper o angular que estava a ser rodado no terminal, e vou
+      instalar a dependência do material design através do comando :
+      ng add @angular/material - Vai ter 3 questões a ser feitas, 1 tem a ver com a
+      escolha do tema do angular, a 2ª tem a ver com estilos (R: Y) e a 3ª questão
+      tem a ver com animações (R: Y)
+
+      4º Passo - Gerar componentes no terminal. Para isso abrimos uma nova aba do
+      frontend (Nota : A outra aba do frontend fica a rodar com o angular aberto)
+      e vamos rodar o comando ng generate component components/template/header 
+      ou ng g c components/template/header/ - Uma pequena nota : 
+      components/template/header refere-se ao caminho onde vamos colocar o 
+      componente header
+      4º Passo - 1 - Agora, se formos a ver a AppModule.ts, além de ter o 
+      AppComponent, acrescentou o HeaderComponent e, importou ele, a partir de 
+      ./components/template/header/header.component
+
+      4º Passo - 2 - Seguindo do passo anterior, já posso usar o HeaderComponent,
+      uma vez que ele já foi declarado em AppModule.ts, em AppComponent.html.
+                      Assim, para testar, em AppComponent.html, vou fazer a
+      abertura da tag <app-header></app-header>
+                      A mensagem que vai dar será : header works
+
+      5º Passo - Agora o que precisamos de fazer no header é trabalhar com o nosso
+      template para que a gente possa criar um template que vai ser o template 
+      usado dentro do header. Para esse template, precisamos de importar a 
+      toolbar do Material e, para importar a toolbar, ele vem de outro módulo, ou
+      seja, dentro dos componentes do Material que foram definidos na aula anterior,
+      existem vários módulos e dentro desse módulos existem componentes e, para a
+      gente usar esses componentes, a gente precisa de importar esses módulos dentro
+      do nosso módulo AppModule.
+                  Assim, em AppModule, vamos fazer :
+      import { MatToolbarModule } from '@angular/material/toolbar'; 
+                  Agora, uma vez que importei esse módulo, a gente vai precisar de
+      colocar essa referência dentro de imports em @NgModule.
+                  Com isso, a gente tem disponível esse componente para ser usado lá
+      no nosso header.
+
+      5º Passo - 1 - Voltando ao header.component.html, a gente vai definir o 
+      seguinte template :
+
+                <mat-toolbar class="header">
+                  <span>
+                      <a href="">
+                          <img src="" alt="">
+                      </a>
+                  </span>
+                </mat-toolbar>
+                
+                      A imagem vai estar dentro da pasta assets, visto que, a pasta
+      assets é responsável pelos arquivos estáticos, inclusive imagens. Para ajustar
+      a imagem, devemos ir a header.component.css 
+      
+              HeaderComponent.css
+                
+                .header {
+                  display: flex;
+                  align-items: center;
+                }
+
+                .header a {
+                  display: flex;
+                  align-items: center;
+                  text-decoration: none;
+                }
+
+                .header .logo {
+                  max-height: 32px;
+                }
+              
+              HeaderComponent.html
+
+                <mat-toolbar class="header mat-elevation-z4">
+                  <span>
+                      <a href="">
+                          <img class="logo" src="../../../../assets/img/logo.png" alt="">
+                      </a>
+                  </span>
+                </mat-toolbar>
+
+            Agora, em relação ao header, vou acrescentar mais umas informações ao 
+      headerComponent.html e ao headerComponent.css
+
+              HeaderComponent.html
+
+                <mat-toolbar class="header mat-elevation-z4">
+                  <span>
+                      <a href="">
+                          <img class="logo" src="../../../../assets/img/logo.png" alt="">
+                      </a>
+                  </span>
+                  <span class="title-group">
+                      <a href="">
+                          <i class="material-icons">
+                              home
+                          </i>
+                          Aplicação CRUD
+                      </a>
+                  </span>
+                </mat-toolbar>
+
+              HeaderComponent.css
+
+                .header {
+                  display: flex;
+                  align-items: center;
+                }
+
+                .header a {
+                  display: flex;
+                  align-items: center;
+                  text-decoration: none;
+                }
+
+                .header .logo {
+                  max-height: 32px;
+                }
+
+                .header .title-group {
+                  padding-left: 25px;
+                }
+
+                .header .title-group i{
+                  padding-right: 5px;
+                }
+
+      6º Passo - Agora vamos criar o componente footer e, para isso, vamos rodar o comando
+      ng g c components/template/footer.
+          Logo em AppComponent.html, eu posso referenciar agora o footer através do
+      comando <app-footer></app-footer> - Na view, aparece Footer works!
+              
+              AppComponent.html
+
+                <app-footer></app-footer>
+
+          Eu, no footer, vou usar, também, o toolbar :
+
+              FooterComponent.html
+
+                <mat-toolbar>
+                  <span>
+                      Desenvolvido com
+                      <i class="material-icons">
+                          favorite
+                      </i>
+                      por <strong>RDAM - <span>Praticar para Aprender</span></strong>
+                  </span>
+                </mat-toolbar>
+            
+      6º Passo - 1 - Nota : Em styles.css , eu posso definir classes que vão ser usadas 
+      de forma global dentro da minha aplicação.
+          Em styles.css, vou criar uma classe chamada red com a cor rgb(227, 94, 107).
+
+              styles.css
+
+                .red {
+                  color: rgb(227, 94, 107);
+                }
+
+          Agora, no footerComponent.html, vou usar essa classe.
+
+              FooterComponent.html
+
+                <mat-toolbar>
+                  <span>
+                      Desenvolvido com
+                      <i class="material-icons red">
+                          favorite
+                      </i>
+                      por <strong>RDAM - <span class="red">Praticar para Aprender</span></strong>
+                  </span>
+                </mat-toolbar>
+
+      6º Passo - 2 - Ainda em FooterComponent.html, eu vou fazer umas modificações, uma 
+      vez que o coração não está centralizado com o texto. 
+            Assim, em styles.css, eu vou definir uma nova classe que será usada de forma
+      global com o nome de vertical-middle.
+            E lá no meu FooterComponent.html, eu vou atribuir essa classe ao icon do
+      coração. 
+      
+              Styles.css
+
+                .v-middle {
+                  vertical-align: middle;
+                }
+              
+              FooterComponent.html
+
+                <mat-toolbar>
+                  <span>
+                      Desenvolvido com
+                      <i class="material-icons red v-middle">
+                          favorite
+                      </i>
+                      por <strong>RDAM - <span class="red">Praticar para Aprender</span></strong>
+                  </span>
+                </mat-toolbar>
+
+      6º Passo - 3 - Ainda em FooterComponent.html, uma outra coisa que nós podemos 
+      fazer é acrescentar à mat-toolbar uma classe com o nome de footer.
+            Assim, em FooterComponent.css , vou criar uma classe com o nome de footer
+      para posicionar os elementos no fundo da página e dando uns ajustes ao texto.
+
+              FooterComponent.css
+
+                .footer {
+                  position: fixed;
+                  bottom: 0; 
+
+                  display:flex;
+                  justify-content: flex-end;
+                }
+
+                .footer > span {
+                  font-size: 1rem;
+                  font-weight: 300;
+                }
+
+              FooterComponent.html
+
+              <mat-toolbar class="footer">
+                <span>
+                    Desenvolvido com
+                    <i class="material-icons red v-middle">
+                        favorite
+                    </i>
+                    por <strong>RDAM - <span class="red">Praticar para Aprender</span></strong>
+                </span>
+              </mat-toolbar>
+      
+      7º Passo - Agora, vamos criar o componente navegação e, para isso, no terminal vou
+      rodar o comando : ng g c components/template/nav
+              Em AppModule.ts, vamos importar o componente nav através do comando 
+      import { NavComponent } from './components/template/navegacao/nav.component'
+      Agora, vou, também, importar mais dois módulos que vamos usar na nossa aplicação :
+
+              import {MatSidenav} from '@angular/material/sidenav';
+              import {MatListModule} from '@angular/material/list';
+
+              Em @NgModule, vou acrescentar a declaração NavComponent e, nos
+      imports, a MatSidenavModule e MatListModule para os podermos usar dentro da nossa
+      aplicação.
+      
+      7º Passo - 1 - Em NavComponent.ts, pode-se reparar que temos um seletor com o nome
+      de app-nav. Com esse nome, nós conseguimos fazer a referência dele dentro do 
+      appComponent.html. Tendo já o header, vou agora acrescentar na linha abaixo a
+      parte da navegação através do comando <app-nav></app-nav> 
+                A mensagem a ser exibida vai ser nav works!
+
+      7º Passo - 2 - Agora em NavComponent.html, vamos definir qual o template a ser 
+      criado para a nossa aplicação.
+
+      Nota : Material Icons - https://material.io/
+      https://material.angular.io/components/
+      
+              NavComponent.html
+
+                <mat-sidenav-container>
+                  <<mat-sidenav>
+                      <mat-nav-list>
+                          <a href="">
+                              <i class="material-icons">
+                                  home
+                              </i>
+                              Início
+                          </a>
+                          <a href="">
+                              <i class="material-icons">
+                                  storefront
+                              </i>
+                              Produtos
+                          </a>
+                      </mat-nav-list>
+                  </mat-sidenav>>
+                </mat-sidenav-container>
+
+              No entanto, lá em AppComponent.html, o template não aparece na página. 
+      Assim, teremos de o redefinir com certas propriedades.
+
+              NavComponent.html
+
+                <mat-sidenav-container class="container">
+                  <mat-sidenav class="sidenav" mode="side" opened fixedInViewport="true" 
+                  fixedTopGap="160">
+                      <mat-nav-list class="nav-list">
+                          <a mat-list-item>
+                              <i class="material-icons">
+                                  home
+                              </i>
+                              Início
+                          </a>
+                          <a mat-list-item>
+                              <i class="material-icons">
+                                  storefront
+                              </i>
+                              Produtos
+                          </a>
+                      </mat-nav-list>
+                  </mat-sidenav>
+                </mat-sidenav-container>
+
+              Ao NavComponent.html, vou formatar alguns estilos utilizando propriedades
+      do css.
+
+              NavComponent.css
+
+                .sidenav {
+                  background-color: #3F51B5;
+                  width: 200px;
+                }
+
+                .sidenav a{
+                  color: #fff;
+                }
+
+                .sidenav i {
+                  padding-right: 10px;
+                }
+
+                
+
+
+
+
+
+              
+            
+    -->
+  </app-root>
+</body>
+</html>
